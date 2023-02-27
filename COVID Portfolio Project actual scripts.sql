@@ -7,7 +7,7 @@ ORDER BY 1, 2
 
 -- Show each location's highest amount of confirmed cases (max amount of people infected) and the percent of the popuation infected
 
-SELECT location, population, max(total_cases) as HighestInfectionCount, max((total_cases/population))*100 as PercentPopulationInfected
+SELECT location, population, MAX(total_cases) as HighestInfectionCount, MAX((total_cases/population))*100 as PercentPopulationInfected
 FROM PortfolioProject..CovidDeaths
 GROUP BY location, population
 ORDER BY 1, 2
