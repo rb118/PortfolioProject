@@ -130,7 +130,6 @@ where dea.continent is not null
 SELECT *, (RollingPeopleVaccinated/population)*100
 FROM #PercentPopulationVaccinated
 
-
 -- Creating view to store data for later visualizations
 
 CREATE View PercentPopulationVaccinated as
@@ -144,7 +143,6 @@ where dea.continent is not null
 
 SELECT *
 FROM PercentPopulationVaccinated
-
 
 -- Max ICU patients by country ordered from highest to lowest
 
