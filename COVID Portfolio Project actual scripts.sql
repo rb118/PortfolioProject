@@ -22,6 +22,7 @@ ORDER BY TotalDeathCount desc
 
 -- Show countries where highest death count is greater than or equal to 50000. First query uses CTE, second query uses subquery
 -- 1. Using cte 
+
 with cte as(
 SELECT location, MAX(CAST(total_deaths as int)) AS TotalDeathCount
 FROM PortfolioProject..CovidDeaths
@@ -45,8 +46,6 @@ FROM (
 WHERE TotalDeathCount >= 50000
 ORDER BY TotalDeathCount DESC
 
-
-
 -- Show total cases, total tests, and the percent of confirmed cases of total tests
 
 SELECT dea.continent, dea.location, dea.date, dea.total_cases, vac.total_tests, (dea.total_cases/vac.total_tests)*100 as CasesPerTest
@@ -57,17 +56,6 @@ JOIN PortfolioProject..CovidVaccinations as vac
 WHERE dea.continent is not null and dea.total_cases != 0 and vac.total_tests != 0
 ORDER BY location, date
 
-
-
--- Breaking things down by continent (correct way ->)
-
-SELECT location, MAX(CAST(total_deaths as int)) AS TotalDeathCount
-FROM PortfolioProject..CovidDeaths
-WHERE continent IS NULL
-GROUP BY location
-ORDER BY TotalDeathCount desc
-
-
 -- Breaking things by continent (where North America only includes U.S. Values) ->
 -- Showing continents with the highest death count per population
 SELECT continent, MAX(CAST(total_deaths as int)) AS TotalDeathCount
@@ -75,9 +63,6 @@ FROM PortfolioProject..CovidDeaths
 WHERE continent IS NOT NULL
 GROUP BY continent
 ORDER BY TotalDeathCount desc
-
-
-
 
 -- Global numbers: global death percentage grouped by date
 
@@ -93,8 +78,6 @@ SELECT SUM(new_cases) as total_cases, SUM(CAST(new_deaths as int)) as total_deat
 FROM PortfolioProject..CovidDeaths
 WHERE continent is not null
 ORDER BY 1, 2
-
-
 
 -- How many people in the world have been vaccinated? (total population vs vaccinated)
 
@@ -122,7 +105,6 @@ WHERE dea.continent is not null
 SELECT *, (RollingPeopleVaccinated/cte.population)*100 as RPV_Percentage
 FROM cte
 ORDER BY 2, 3
-
 
 -- temp table
 
@@ -207,8 +189,6 @@ SELECT location, date, icu_patients2
 FROM cte
 WHERE rnk <= 3 and icu_patients2 IS NOT NULL
 
-
-
 -- Amount of people fully vaccinated in each country
 
 SELECT dea.location, dea.population, MAX(CAST(vac.people_fully_vaccinated as int)) as fully_vaxxed
@@ -235,7 +215,6 @@ GROUP BY dea.location, dea.population
 SELECT location, population, fully_vaxxed, (fully_vaxxed/population)*100 as PercentFullyVaccinated
 FROM cte
 ORDER BY location
-
 
 -- 7 day rolling average of deaths for United States
 
