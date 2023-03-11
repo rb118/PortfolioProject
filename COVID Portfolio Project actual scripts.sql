@@ -229,3 +229,37 @@ FROM PortfolioProject..CovidDeaths
 WHERE continent is not null
 ORDER BY location, date
 
+-- People vaccinated (1 dose)
+
+with cte as (
+SELECT dea.continent, dea.location, dea.population, MAX(CAST(vac.people_vaccinated as int)) as partially_vaxxed
+FROM PortfolioProject..CovidDeaths dea
+JOIN PortfolioProject..CovidVaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+--WHERE dea.continent IS NOT NULL
+GROUP BY dea.continent, dea.location, dea.population
+)
+
+SELECT continent, location, population, partially_vaxxed, (partially_vaxxed/population)*100 as PercentPartiallyVaccinated
+FROM cte
+
+-- People vaccinated per hundred
+
+SELECT continent, location, max(cast(people_vaccinated_per_hundred as float)) as Max_People_Vaccinated_Per_Hundred
+FROM PortfolioProject..CovidVaccinations
+GROUP BY continent, location
+ORDER BY location
+
+-- GDP per capita and people vaccinated per hundred 
+
+with cte as(
+SELECT continent, location, max(gdp_per_capita) as Max_GDP_Per_Capita, max(cast(people_vaccinated_per_hundred as float)) as Max_People_Vaccinated_Per_Hundred 
+FROM PortfolioProject..CovidVaccinations
+GROUP BY continent, location
+)
+
+SELECT *
+FROM cte
+WHERE Max_GDP_Per_Capita IS NOT NULL
+ORDER BY Max_People_Vaccinated_Per_Hundred DESC
