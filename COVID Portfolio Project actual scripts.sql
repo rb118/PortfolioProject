@@ -162,6 +162,7 @@ GROUP BY location, date
 ORDER BY icupatients desc
 
 -- What were the 3 days with the highest number of ICU patients in the United States?
+
 with cte as (
 SELECT location, date, MAX(CAST(icu_patients as int)) as icu_patients2, RANK() OVER(PARTITION BY location ORDER BY MAX(CAST(icu_patients as int)) DESC) as rnk
 FROM PortfolioProject..CovidDeaths
