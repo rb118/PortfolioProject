@@ -403,4 +403,65 @@ Here are some rows looking at Turkey:
 
 ***
 
+### 19. How many people have been vaccinated with one dose? 
 
+```sql
+with cte AS(
+SELECT dea.continent, dea.location, dea.population, MAX(CAST(vac.people_vaccinated AS int)) AS partially_vaxxed
+FROM PortfolioProject..CovidDeaths dea
+JOIN PortfolioProject..CovidVaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+--WHERE dea.continent IS NOT NULL
+GROUP BY dea.continent, dea.location, dea.population
+)
+
+SELECT continent, location, population, partially_vaxxed, (partially_vaxxed/population)*100 AS PercentPartiallyVaccinated
+FROM cte
+```
+
+Result: 219 rows
+
+Here are rows showing some countries in Asia:
+
+![](CovidProjectImages/covid_sql_image_19.png)
+
+***
+
+### 20. How many people have been vaccinated per hundred?
+
+```sql
+SELECT continent, location, MAX(cast(people_vaccinated_per_hundred AS float)) AS Max_People_Vaccinated_Per_Hundred
+FROM PortfolioProject..CovidVaccinations
+GROUP BY continent, location
+ORDER BY location
+```
+
+Result: 219 rows
+
+Here are the first few rows:
+
+![](CovidProjectImages/covid_sql_image_20.png)
+
+***
+
+### 21. What is a country's GDP per capita and amount of people vaccinated per hundred?
+
+```sql
+with cte AS(
+SELECT continent, location, MAX(gdp_per_capita) AS Max_GDP_Per_Capita, MAX(cast(people_vaccinated_per_hundred AS float)) AS Max_People_Vaccinated_Per_Hundred 
+FROM PortfolioProject..CovidVaccinations
+GROUP BY continent, location
+)
+
+SELECT *
+FROM cte
+WHERE Max_GDP_Per_Capita IS NOT NULL
+ORDER BY Max_People_Vaccinated_Per_Hundred DESC
+```
+
+Result: 190 rows
+
+Here are the first few rows:
+
+![](CovidProjectImages/covid_sql_image_21.png)
