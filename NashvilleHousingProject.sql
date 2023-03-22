@@ -54,8 +54,6 @@ WHERE a.PropertyAddress IS NULL
 
 SELECT PropertyAddress
 FROM PortfolioProject..NashvilleHousing
---WHERE PropertyAddress IS NULL
---order by ParcelID
 
 
 SELECT 
@@ -145,7 +143,7 @@ SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
 
 -------------------------------------------------------------------------------------------------------
 
--- Remove duplicates
+-- Remove Duplicates
 
 with RowCTE as (
 SELECT *,
@@ -168,7 +166,7 @@ WHERE rn > 1
 -------------------------------------------------------------------------------------------------------
 
 
--- Delete unused columns
+-- Delete Unused Columns
 
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
 DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress, SaleDate
