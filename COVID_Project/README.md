@@ -1,4 +1,4 @@
-👩🏻‍⚕️ # COVID-19 Data Exploration
+# COVID-19 Data Exploration 🍜
 
 Let's explore a global COVID-19 data set.
 
