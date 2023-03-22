@@ -6,7 +6,7 @@ View the complete syntax [here](https://github.com/rb118/PortfolioProject/blob/m
 
 ***
 
-### 1. Show total cases, total deaths, and the amount of deaths per case
+### 1. What are the total cases, total deaths, and the amount of deaths per case in the United States?
 
 ``` sql
 SELECT location, date, total_cases, total_deaths, (total_deaths)/(total_cases)*100 AS DeathPercentage
@@ -23,7 +23,7 @@ Here are the last few rows:
 
 ***
 
-### 2. Show each location's highest amount of confirmed cases (max amount of people infected) and the percent of the popuation infected
+### 2. What are each location's highest amount of confirmed cases (max amount of people infected) and the percent of the popuation infected?
 
 ``` sql 
 SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS PercentPopulationInfected
@@ -40,7 +40,7 @@ Here are the first 9 rows:
 
 ***
 
-### 3. Show countries and their max total death count
+### 3. What is the max total death count for each location?
 
 ``` sql
 SELECT location, MAX(CAST(total_deaths AS int)) AS TotalDeathCount
@@ -58,7 +58,7 @@ Here are the first 9 rows:
 
 ***
 
-### 4. Show countries where highest death count is greater than or equal to 50,000
+### 4. What are the countries where the highest death count is greater than or equal to 50,000?
 
 ``` sql
 with cte AS(
@@ -81,7 +81,7 @@ Here are the last few rows (notice TotalDeathCount does not go below 50,000):
 
 ***
 
-### 5. Show total cases, total tests, and the percent of confirmed cases of total tests
+### 5. What are the total cases, total tests, and the percent of confirmed cases of total tests?
 
 ``` sql
 SELECT dea.continent, dea.location, dea.date, dea.total_cases, vac.total_tests, (dea.total_cases/vac.total_tests)*100 AS CasesPerTest
@@ -117,7 +117,7 @@ Result: 6 rows
 
 ***
 
-### 7. Global numbers: Show the global death percentage grouped by date
+### 7. Global numbers: What is the global death percentage grouped by date?
 
 ```sql
 SELECT date, SUM(new_cases) AS total_cases, SUM(CAST(new_deaths AS int)) AS total_deaths, SUM(CAST(new_deaths AS int))/SUM(new_cases)*100 AS DeathPercentage
@@ -135,7 +135,7 @@ Here are the last few rows:
 
 ***
 
-### 8. Global numbers: Show the global death percetange
+### 8. Global numbers: What is the global death percetange?
 
 ```sql
 SELECT SUM(new_cases) AS total_cases, SUM(CAST(new_deaths AS int)) AS total_deaths, SUM(CAST(new_deaths AS int))/SUM(new_cases)*100 AS DeathPercentage
