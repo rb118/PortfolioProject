@@ -58,6 +58,7 @@ ORDER BY location, date
 
 -- Breaking things by continent (where North America only includes U.S. Values) ->
 -- Showing continents with the highest death count per population
+
 SELECT continent, MAX(CAST(total_deaths AS int)) AS TotalDeathCount
 FROM PortfolioProject..CovidDeaths
 WHERE continent IS NOT NULL
