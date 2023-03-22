@@ -242,7 +242,7 @@ FROM PercentPopulationVaccinated
 
 ***
 
-### 11. Max ICU patients by country ordered from highest to lowest
+### 11. What are the max ICU patients by country ordered from highest to lowest?
 
 ```sql
 SELECT location, MAX(CAST(icu_patients AS int)) AS maxicu
@@ -258,4 +258,89 @@ Result: 210 rows, most of which are null so I will not show them
 
 ***
 
-### 12. 
+### 12. What were the dates with the highest number of ICU patients in the United States?
+
+```sql
+SELECT location, date, MAX(CAST(icu_patients AS int)) AS icupatients
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+AND location = 'United States'
+GROUP BY location, date
+ORDER BY icupatients DESC
+```
+
+Result: 465 rows
+
+Here are the first 9 rows: 
+
+![](CovidProjectImages/covid_sql_image_12.png)
+
+***
+
+### 13. What were the 3 days with the highest number of ICU patients in the United States?
+
+```sql
+with cte AS(
+SELECT location, date, MAX(CAST(icu_patients AS int)) AS icu_patients2, RANK() OVER(PARTITION BY location ORDER BY MAX(CAST(icu_patients AS int)) DESC) AS rnk
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+AND location = 'United States'
+GROUP BY location, date
+)
+
+SELECT location, date, icu_patients2
+FROM cte
+WHERE rnk <= 3
+```
+
+Result: 3 rows
+
+![](CovidProjectImages/covid_sql_image_13.png)
+
+***
+
+### 14. What were the top 3 days with highest number of ICU patients for every country?
+
+```sql
+with cte AS(
+SELECT location, date, MAX(CAST(icu_patients AS int)) AS icu_patients2, RANK() OVER(PARTITION BY location ORDER BY MAX(CAST(icu_patients AS int)) DESC) AS rnk
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+GROUP BY location, date
+)
+
+SELECT location, date, icu_patients2
+FROM cte
+WHERE rnk <= 3 AND icu_patients2 IS NOT NULL
+```
+
+Result: 75 rows
+
+Here are the first few rows:
+
+![](CovidProjectImages/covid_sql_image_14.png)
+
+***
+
+### 15. What is the amount of people fully vaccinated in each country?
+
+```sql
+SELECT dea.location, dea.population, MAX(CAST(vac.people_fully_vaccinated AS int)) AS fully_vaxxed
+FROM PortfolioProject..CovidDeaths dea
+JOIN PortfolioProject..CovidVaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL
+GROUP BY dea.location, dea.population
+ORDER BY fully_vaxxed DESC
+```
+
+Result: 210 rows
+
+Here are the first few rows:
+
+![](CovidProjectImages/covid_sql_image_15.png)
+
+***
+
+### 16. 
