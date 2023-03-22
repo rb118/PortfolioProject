@@ -17,7 +17,7 @@ ORDER BY 1, 2
 
 Result: 465 rows
 
-Here are the last of the rows:
+Here are the last few rows:
 
 ![](CovidProjectImages/covid_sql_image_1.png)
 
@@ -75,7 +75,7 @@ ORDER BY TotalDeathCount DESC
 
 Result: 210 rows
 
-Here are the last rows (notice TotalDeathCount does not go below 50,000):
+Here are the last few rows (notice TotalDeathCount does not go below 50,000):
 
 ![](CovidProjectImages/covid_sql_image_4.png)
 
@@ -101,4 +101,161 @@ Here are the first 9 rows:
 
 ***
 
-### 6. Breaking things by continent (where North America only includes U.S. Values)
+### 6. Breaking things down by continent (where North America only includes U.S. Values) and showing continents with the highest death count per population
+
+```sql
+SELECT continent, MAX(CAST(total_deaths AS int)) AS TotalDeathCount
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+GROUP BY continent
+ORDER BY TotalDeathCount DESC
+```
+
+Result: 6 rows
+
+![](CovidProjectImages/covid_sql_image_6.png)
+
+***
+
+### 7. Global numbers: Show the global death percentage grouped by date
+
+```sql
+SELECT date, SUM(new_cases) AS total_cases, SUM(CAST(new_deaths AS int)) AS total_deaths, SUM(CAST(new_deaths AS int))/SUM(new_cases)*100 AS DeathPercentage
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+GROUP BY date
+ORDER BY 1, 2
+```
+
+Result: 486 rows
+
+Here are the last few rows:
+
+![](CovidProjectImages/covid_sql_image_7.png)
+
+***
+
+### 8. Global numbers: Show the global death percetange
+
+```sql
+SELECT SUM(new_cases) AS total_cases, SUM(CAST(new_deaths AS int)) AS total_deaths, SUM(CAST(new_deaths AS int))/SUM(new_cases)*100 AS DeathPercentage
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+ORDER BY 1, 2
+```
+
+Result: 1 row
+
+![](CovidProjectImages/covid_sql_image_8.png)
+
+
+### 9. How many people in the world have been vaccinated (total population vs vaccinated)? 
+
+```sql
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
+SUM(CAST(vac.new_vaccinations AS int)) OVER(PARTITION BY dea.location ORDER BY dea.location, dea.date) AS RollingPeopleVaccinated
+FROM PortfolioProject..CovidDeaths AS dea
+JOIN PortfolioProject..CovidVaccinations AS vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL
+ORDER by 2, 3
+```
+
+Result: 81,060 rows
+
+Here are the last few rows: 
+
+![](CovidProjectImages/covid_sql_image_9.png)
+
+***
+
+### 10. Using above with CTE to help find percent of people vaccinated
+
+```sql
+with cte AS(
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
+SUM(CAST(vac.new_vaccinations AS int)) OVER(PARTITION BY dea.location ORDER BY dea.location, dea.date) AS RollingPeopleVaccinated
+FROM PortfolioProject..CovidDeaths AS dea
+JOIN PortfolioProject..CovidVaccinations AS vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL
+)
+
+SELECT *, (RollingPeopleVaccinated/cte.population)*100 AS RPV_Percentage
+FROM cte
+ORDER BY 2, 3
+```
+
+Result: 81,060 rows
+
+Here are the last few rows:
+
+![](CovidProjectImages/covid_sql_image_10.png)
+
+***
+
+### 10a. Turning above into temp table and then creating a view
+
+#### Creating temp table
+
+``` sql
+DROP Table if exists #PercentPopulationVaccinated
+CREATE Table #PercentPopulationVaccinated
+(Continent nvarchar(255),
+Location nvarchar(255),
+Date datetime,
+Population numeric,
+New_vaccination numeric,
+RollingPeopleVaccinated numeric
+)
+
+INSERT into #PercentPopulationVaccinated
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
+SUM(CAST(vac.new_vaccinations AS int)) OVER(PARTITION BY dea.location ORDER BY dea.location, dea.date) AS RollingPeopleVaccinated
+FROM PortfolioProject..CovidDeaths AS dea
+JOIN PortfolioProject..CovidVaccinations AS vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL
+
+SELECT *, (RollingPeopleVaccinated/population)*100 AS RPV_Percentage
+FROM #PercentPopulationVaccinated
+```
+
+#### Creating view
+
+``` sql
+CREATE View PercentPopulationVaccinated AS
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations,
+SUM(CAST(vac.new_vaccinations AS int)) OVER(PARTITION BY dea.location ORDER BY dea.location, dea.date) AS RollingPeopleVaccinated
+FROM PortfolioProject..CovidDeaths AS dea
+JOIN PortfolioProject..CovidVaccinations AS vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+where dea.continent IS NOT NULL
+
+SELECT *
+FROM PercentPopulationVaccinated
+```
+
+***
+
+### 11. Max ICU patients by country ordered from highest to lowest
+
+```sql
+SELECT location, MAX(CAST(icu_patients AS int)) AS maxicu
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+GROUP BY location
+ORDER BY maxicu DESC
+```
+
+Result: 210 rows, most of which are null so I will not show them
+
+![](CovidProjectImages/covid_sql_image_11.png)
+
+***
+
+### 12. 
