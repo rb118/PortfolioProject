@@ -343,4 +343,64 @@ Here are the first few rows:
 
 ***
 
-### 16. 
+### 16. What is the amount of people fully vaccinated in each country expressed as a percentage?
+
+```sql
+with cte AS(
+SELECT dea.location, dea.population, MAX(CAST(vac.people_fully_vaccinated AS int)) AS fully_vaxxed
+FROM PortfolioProject..CovidDeaths dea
+JOIN PortfolioProject..CovidVaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL
+GROUP BY dea.location, dea.population
+)
+
+SELECT location, population, fully_vaxxed, (fully_vaxxed/population)*100 AS PercentFullyVaccinated
+FROM cte
+ORDER BY location
+```
+
+Result: 210 rows
+
+Here are the first few rows:
+
+![](CovidProjectImages/covid_sql_image_16.png)
+
+***
+
+### 17. What is the 7 day rolling average of deaths for United States?
+
+```sql
+SELECT continent, location, date,  population, CAST(new_deaths AS int) AS new_deaths, AVG(CAST(new_deaths AS int)) over(partition BY location ORDER BY location, date rows between 6 preceding and current row) as WeeklyRollingDeathAverage
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL AND location = 'United States'
+ORDER BY location, date
+```
+
+Result: 465 rows
+
+Here are the last few rows:
+
+![](CovidProjectImages/covid_sql_image_17.png)
+
+***
+
+### 18. What is the 7 day rolling average of deaths for every location?
+
+```sql
+SELECT continent, location, date,  population, CAST(new_deaths AS int) AS new_deaths, AVG(CAST(new_deaths AS int)) over(partition BY location ORDER BY location, date rows between 6 preceding and current row) as WeeklyRollingDeathAverage
+FROM PortfolioProject..CovidDeaths
+WHERE continent IS NOT NULL
+ORDER BY location, date
+```
+
+Result: 81,060 rows
+
+Here are some rows looking at Turkey:
+
+![](CovidProjectImages/covid_sql_image_18.png)
+
+***
+
+
