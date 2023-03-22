@@ -247,7 +247,7 @@ FROM cte
 
 -- People vaccinated per hundred
 
-SELECT continent, location, max(cast(people_vaccinated_per_hundred AS float)) AS Max_People_Vaccinated_Per_Hundred
+SELECT continent, location, MAX(cast(people_vaccinated_per_hundred AS float)) AS Max_People_Vaccinated_Per_Hundred
 FROM PortfolioProject..CovidVaccinations
 GROUP BY continent, location
 ORDER BY location
@@ -255,7 +255,7 @@ ORDER BY location
 -- GDP per capita and people vaccinated per hundred 
 
 with cte AS(
-SELECT continent, location, max(gdp_per_capita) AS Max_GDP_Per_Capita, max(cast(people_vaccinated_per_hundred AS float)) AS Max_People_Vaccinated_Per_Hundred 
+SELECT continent, location, MAX(gdp_per_capita) AS Max_GDP_Per_Capita, MAX(cast(people_vaccinated_per_hundred AS float)) AS Max_People_Vaccinated_Per_Hundred 
 FROM PortfolioProject..CovidVaccinations
 GROUP BY continent, location
 )
