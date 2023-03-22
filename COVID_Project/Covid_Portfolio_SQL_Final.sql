@@ -32,7 +32,7 @@ GROUP BY location
 SELECT location, TotalDeathCount
 FROM cte
 WHERE TotalDeathCount >= 50000
-ORDER BY TotalDeathCount desc
+ORDER BY TotalDeathCount DESC
 
 -- b. Using subquery
 
