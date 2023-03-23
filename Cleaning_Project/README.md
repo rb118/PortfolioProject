@@ -2,6 +2,8 @@
 
 In this project, we have a data set about housing in Nashville. Let's clean it to make it more usable for data analysis.
 
+Download the original data [here](https://github.com/rb118/PortfolioProject/blob/main/Cleaning_Project/Nashville%20Housing%20Data%20for%20Data%20Cleaning.xlsx).
+
 View the syntax [here](https://github.com/rb118/PortfolioProject/blob/main/Cleaning_Project/NashvilleHousingProject.sql).
 
 ***
