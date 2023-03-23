@@ -279,7 +279,7 @@ Here are the first 9 rows:
 
 ***
 
-### 13. What were the 3 days with the highest number of ICU patients in the United States?
+### 13. What are the 3 days with the highest number of ICU patients in the United States?
 
 ```sql
 with cte AS(
@@ -301,7 +301,7 @@ Result: 3 rows
 
 ***
 
-### 14. What were the top 3 days with highest number of ICU patients for every country?
+### 14. What are the top 3 days with highest number of ICU patients for every country?
 
 ```sql
 with cte AS(
