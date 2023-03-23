@@ -171,4 +171,89 @@ PARSENAME looks for periods, and OwnerAddress is separated by commas. So, we use
 
 In the original column OwnerAddress, the order of each record is address then city followed by state. For the three times we used PARSENAME, we ended the syntax with 3, then 2, then 1, respectively. If we had done 1 then 2 then 3, our resulting data would be 3 columns in the order of state, city, then address. So, if we use 3 in the PARSENAME syntax, we will actually get the first part of the OwnerAddress data, which is the address (2 would be city and 1 would be the state).
 
+Now let's update our data.
+
+Owner's address:
+
+```sql
+ALTER TABLE PortfolioProject.dbo.NashvilleHousing
+Add OwnerSplitAddress Nvarchar(255);
+
+UPDATE PortfolioProject.dbo.NashvilleHousing
+SET OwnerSplitAddress = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 3)
+```
+
+Owner's city:
+
+```sql
+ALTER TABLE PortfolioProject.dbo.NashvilleHousing
+Add OwnerSplitCity Nvarchar(255);
+
+UPDATE PortfolioProject.dbo.NashvilleHousing
+SET OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 2)
+```
+
+Owner's state:
+
+```sql
+ALTER TABLE PortfolioProject.dbo.NashvilleHousing
+Add OwnerSplitState Nvarchar(255);
+
+UPDATE PortfolioProject.dbo.NashvilleHousing
+SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
+```
+
+Now, if we look at all our data for the NashvilleHousing table, we will have three new columns.
+
+IMAGE 10:
+
+***
+
+## 4. Change "Y" and "N" to "Yes" and "No" in "Sold as Vacant" column
+
+In our SoldAsVacant column, we have four different results: "Y", "N", "Yes", or "No". Let's change this column so that "Y" becomes "Yes" and "N" becomes "No."
+
+```sql
+SELECT DISTINCT(SoldAsVacant), COUNT(SoldAsVacant)
+FROM PortfolioProject.dbo.NashvilleHousing
+GROUP BY SoldAsVacant
+ORDER BY 2
+```
+
+IMAGE 11: 
+
+This query gives us two columns: the first is the distinct values in the SoldAsVacant column, and the second is the number of records of each distinct value.
+
+Here is the query that will show us the original SoldAsVacant column, and the new SoldAsVacant (which we will use in an update statement soon):
+
+```sql
+SELECT SoldAsVacant,
+	CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+		 WHEN SoldAsVacant = 'N' THEN 'No'
+		 ELSE SoldAsVacant
+		 END
+FROM PortfolioProject.dbo.NashvilleHousing
+```
+
+IMAGE 12:
+
+Note in the second column that "N" has become "No."
+
+Now let's update our data.
+
+```sql
+UPDATE PortfolioProject.dbo.NashvilleHousing
+SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+		 WHEN SoldAsVacant = 'N' THEN 'No'
+		 ELSE SoldAsVacant
+		 END
+```
+
+If we run the first query we made for this question that counts the distinct values, we will see that our update worked.
+
+IMAGE 13:
+
+***
+
+
 
