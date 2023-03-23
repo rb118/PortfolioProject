@@ -280,5 +280,17 @@ WHERE rn > 1
 
 This query will partition our data by the columns ParcelID, PropertyAddress, SalePrice, SaleDate, and LegalReference. Since we are using the ROW_NUMBER function, each row where these values are unique will have a ROW_NUMBER value of 1. If there is more than one row where those values are repeated, the value of that ROW_NUMBER will be more than 1, which means we will have a duplicate row. We can use DELETE to get rid of values where ROW_NUMBER is greater than 1.
 
+***
+
+## 6. Delete unused columns
+
+```sql
+ALTER TABLE PortfolioProject.dbo.NashvilleHousing
+DROP COLUMN OwnerAddress, PropertyAddress, SaleDate
+```
+
+This query gets rid of columns that we no longer need since we have updated columns for each.
+
+***
 
 
