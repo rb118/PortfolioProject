@@ -94,7 +94,7 @@ The above UPDATE query will successfully populate the PropertyAddress column.
 
 ***
 
-## 3. Separating Address into Individual Columns (Address, City, State)
+## 3a. Separating Address into Individual Columns (Address, City, State)
 
 Let's look at the PropertyAddress column.
 
@@ -146,7 +146,29 @@ SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddres
 
 IMAGE: 7
 
+## 3b. We can do the same thing in a different and simpler way. Let's look at the OwnerAddress column this time. 
 
+```sql
+SELECT OwnerAddress
+FROM PortfolioProject.dbo.NashvilleHousing
+```
 
+IMAGE 8:
+
+Here we have the address, city, and state. We want to split this into three different columns. We will use PARSENAME to do this.
+
+```sql
+SELECT
+	PARSENAME(REPLACE(OwnerAddress, ',', '.'), 3),
+	PARSENAME(REPLACE(OwnerAddress, ',', '.'), 2),
+	PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
+FROM PortfolioProject.dbo.NashvilleHousing
+```
+
+IMAGE 9:
+
+PARSENAME looks for periods, and OwnerAddress is separated by commas. So, we used the REPLACE function to replace the commas with periods.
+
+In the original column OwnerAddress, the order of each record is address then city followed by state. For PARSENAME, we ended the syntax with 3, then 2, then 1. If we had done 1 then 2 then 3, our resulting data would be 3 columns in the order of state, city, then address. So, if we use 3 in the PARSENAME syntax, we will actually get the first part of the OwnerAddress data, which is the address (2 would be city and 1 would be the state).
 
 
