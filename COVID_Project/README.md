@@ -260,7 +260,7 @@ Result: 210 rows, most of which are null so I will not show them
 
 ***
 
-### 12. What were the dates with the highest number of ICU patients in the United States?
+### 12. What are the dates with the highest number of ICU patients in the United States?
 
 ```sql
 SELECT location, date, MAX(CAST(icu_patients AS int)) AS icupatients
