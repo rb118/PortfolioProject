@@ -169,6 +169,6 @@ IMAGE 9:
 
 PARSENAME looks for periods, and OwnerAddress is separated by commas. So, we used the REPLACE function to replace the commas with periods.
 
-In the original column OwnerAddress, the order of each record is address then city followed by state. For PARSENAME, we ended the syntax with 3, then 2, then 1. If we had done 1 then 2 then 3, our resulting data would be 3 columns in the order of state, city, then address. So, if we use 3 in the PARSENAME syntax, we will actually get the first part of the OwnerAddress data, which is the address (2 would be city and 1 would be the state).
+In the original column OwnerAddress, the order of each record is address then city followed by state. For the three times we used PARSENAME, we ended the syntax with 3, then 2, then 1, respectively. If we had done 1 then 2 then 3, our resulting data would be 3 columns in the order of state, city, then address. So, if we use 3 in the PARSENAME syntax, we will actually get the first part of the OwnerAddress data, which is the address (2 would be city and 1 would be the state).
 
 
