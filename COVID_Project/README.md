@@ -75,7 +75,7 @@ ORDER BY TotalDeathCount DESC
 
 Result: 210 rows
 
-Here are the last few rows (notice TotalDeathCount does not go below 50,000):
+Here are the last few rows where the result is not null (notice TotalDeathCount does not go below 50,000):
 
 ![](CovidProjectImages/covid_sql_image_4.png)
 
