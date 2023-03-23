@@ -11,9 +11,9 @@ SELECT *
 FROM PortfolioProject.dbo.NashvilleHousing
 ```
 
-IMAGE 1 HERE:
+![](CleaningPortfolioImages/cleaning_sql_selectall1.png)
 
-IMAGE 2 HERE:
+![](CleaningPortfolioImages/cleaning_sql_selectall2.png)
 
 ***
 
@@ -26,7 +26,7 @@ SELECT SaleDate
 FROM PortfolioProject.dbo.NashvilleHousing
 ```
 
-IMAGE: 
+![](CleaningPortfolioImages/cleaning_sql_image_1.png)
 
 Let's change it so we only get the date (yyyy-mm-dd).
 
@@ -38,7 +38,7 @@ UPDATE NashvilleHousing
 SET SaleDateConverted = CONVERT(Date, SaleDate)
 ```
 
-IMAGE: 
+![](CleaningPortfolioImages/cleaning_sql_image_2.png)
 
 ***
 
@@ -54,7 +54,7 @@ FROM PortfolioProject..NashvilleHousing
 ORDER BY ParcelID
 ```
 
-IMAGE: image_3
+![](CleaningPortfolioImages/cleaning_sql_image_3.png)
 
 So, we can say if the first ParcelID highlighted has a PropertyAddress, and the second ParcelID does not have an PropertyAddress, let's populate it with the first address that's already populated since we know they are going to be the same.
 
@@ -70,9 +70,8 @@ JOIN PortfolioProject..NashvilleHousing b
 	AND a.[UniqueID ] <> b.[UniqueID ]
 WHERE a.PropertyAddress IS NULL
 ```
-Result:
 
-IMAGE: image_4
+![](CleaningPortfolioImages/cleaning_sql_image_4.png)
 
 In this query, we use a self join. The first join condition is "WHEN a.ParcelID = b.ParcelID" because in the original data, there are multiple records with the same ParcelID. For the second join condition, we want the results to be when a.UniqueID IS NOT EQUAL to b.UniqueID. Since UniqueIDs are unique, this makes sure that the records we are querying will be different (in terms of UniqueID).
 
@@ -103,7 +102,7 @@ SELECT PropertyAddress
 FROM PortfolioProject..NashvilleHousing
 ```
 
-IMAGE:
+![](CleaningPortfolioImages/cleaning_sql_image_5.png)
 
 This column has the address followed by the city. Let's clean this data by separating the address from the city. 
 
@@ -116,7 +115,7 @@ SELECT
 FROM PortfolioProject..NashvilleHousing
 ```
 
-IMAGE: 
+![](CleaningPortfolioImages/cleaning_sql_image_6.png)
 
 To separate PropertyAddress into just the address, we used the SUBSTRING and CHARINDEX functions to get the data of each record BEFORE the comma. We used "-1" because we do not want the comma in the new column we are making.
 
@@ -144,7 +143,7 @@ UPDATE PortfolioProject.dbo.NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +2, LEN(PropertyAddress))
 ```
 
-IMAGE: 7
+![](CleaningPortfolioImages/cleaning_sql_image_7.png)
 
 ## 3b. We can do the same thing in a different and simpler way. Let's look at the OwnerAddress column this time. 
 
@@ -153,7 +152,7 @@ SELECT OwnerAddress
 FROM PortfolioProject.dbo.NashvilleHousing
 ```
 
-IMAGE 8:
+![](CleaningPortfolioImages/cleaning_sql_image_8.png)
 
 Here we have the address, city, and state. We want to split this into three different columns. We will use PARSENAME to do this.
 
@@ -165,7 +164,7 @@ SELECT
 FROM PortfolioProject.dbo.NashvilleHousing
 ```
 
-IMAGE 9:
+![](CleaningPortfolioImages/cleaning_sql_image_9.png)
 
 PARSENAME looks for periods, and OwnerAddress is separated by commas. So, we used the REPLACE function to replace the commas with periods.
 
@@ -205,7 +204,7 @@ SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.'), 1)
 
 Now, if we look at all our data for the NashvilleHousing table, we will have three new columns.
 
-IMAGE 10:
+![](CleaningPortfolioImages/cleaning_sql_image_10.png)
 
 ***
 
@@ -220,7 +219,7 @@ GROUP BY SoldAsVacant
 ORDER BY 2
 ```
 
-IMAGE 11: 
+![](CleaningPortfolioImages/cleaning_sql_image_11.png)
 
 This query gives us two columns: the first is the distinct values in the SoldAsVacant column, and the second is the number of records of each distinct value.
 
@@ -235,7 +234,7 @@ SELECT SoldAsVacant,
 FROM PortfolioProject.dbo.NashvilleHousing
 ```
 
-IMAGE 12:
+![](CleaningPortfolioImages/cleaning_sql_image_12.png)
 
 Note in the second column that "N" has become "No."
 
@@ -251,7 +250,7 @@ SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
 
 If we run the first query we made for this question that counts the distinct values, we will see that our update worked.
 
-IMAGE 13:
+![](CleaningPortfolioImages/cleaning_sql_image_13.png)
 
 ***
 
