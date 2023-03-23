@@ -2,7 +2,7 @@
 
 In this project, we have a data set about housing in Nashville. Let's clean it to make it more usable for data analysis.
 
-View the syntax [here](PortfolioProject/Cleaning_Project/NashvilleHousingProject.sql).
+View the syntax [here](https://github.com/rb118/PortfolioProject/blob/main/Cleaning_Project/NashvilleHousingProject.sql).
 
 ***
 
