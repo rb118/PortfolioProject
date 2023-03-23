@@ -93,7 +93,7 @@ WHERE dea.continent IS NOT NULL AND dea.total_cases != 0 AND vac.total_tests != 
 ORDER BY location, date
 ```
 
-Result: 38, 361 rows
+Result: 38,361 rows
 
 Here are the first 9 rows: 
 
