@@ -167,4 +167,4 @@ WHERE rn > 1
 -- Delete Unused Columns
 
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
-DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress, SaleDate
+DROP COLUMN OwnerAddress, PropertyAddress, SaleDate
