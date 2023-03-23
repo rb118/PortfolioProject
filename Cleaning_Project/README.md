@@ -94,7 +94,33 @@ The above UPDATE query will successfully populate the PropertyAddress column.
 
 ***
 
+## 3. Separating Address into Individual Columns (Address, City, State)
 
+Let's look at the PropertyAddress column.
+
+```sql
+SELECT PropertyAddress
+FROM PortfolioProject..NashvilleHousing
+```
+
+IMAGE:
+
+This column has the address followed by the city. Let's clean this data by separating the address from the city. 
+
+Note that the data in this column is separated by a comma. We will use this to separate the column into two different ones. The following query will separate PropertyAddress into two columns: one for the address and the other for the city.
+
+```sql
+SELECT 
+	SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1) AS Address,
+	SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +2, LEN(PropertyAddress)) AS Address
+FROM PortfolioProject..NashvilleHousing
+```
+
+IMAGE: 
+
+To separate PropertyAddress into just the address, we used the SUBSTRING and CHARINDEX functions to get the data of each record BEFORE the comma. We used "-1" because we do not want the comma in the new column we are making.
+
+To separate PropertyAddress into the city, we will use the same functions as before in addition to the LEN function. Firstly, our starting posititon (as per the syntax for the SUBSTRING function) is the index of the comma +2. The +2 will give us the start of the name of the city with no space or comma preceding it. We use LEN(PropertyAddress) as the last part of the SUBSTRING syntax to return the rest of the data in that record.
 
 
 
