@@ -122,7 +122,29 @@ To separate PropertyAddress into just the address, we used the SUBSTRING and CHA
 
 To separate PropertyAddress into the city, we will use the same functions as before in addition to the LEN function. Firstly, our starting posititon (as per the syntax for the SUBSTRING function) is the index of the comma +2. The +2 will give us the start of the name of the city with no space or comma preceding it. We use LEN(PropertyAddress) as the last part of the SUBSTRING syntax to return the rest of the data in that record.
 
+Now let's update our data.
 
+Making the first column, PropertySplitAddress:
+
+```sql
+ALTER TABLE PortfolioProject.dbo.NashvilleHousing
+ADD PropertySplitAddress Nvarchar(255);
+
+UPDATE PortfolioProject.dbo.NashvilleHousing
+SET PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1)
+```
+
+Making the second column, PropertySplitCity:
+
+```sql
+ALTER TABLE PortfolioProject.dbo.NashvilleHousing
+ADD PropertySplitCity Nvarchar(255);
+
+UPDATE PortfolioProject.dbo.NashvilleHousing
+SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +2, LEN(PropertyAddress))
+```
+
+IMAGE: 7
 
 
 
