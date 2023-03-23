@@ -255,5 +255,30 @@ IMAGE 13:
 
 ***
 
+## 5. Remove duplicates
+
+To remove duplicates for this data set, we can use PARTITION BY and select some columns that, when combined in a partition, will be more or less a distinct value. 
+
+```sql
+with RowCTE AS(
+SELECT *,
+	ROW_NUMBER() OVER (
+	PARTITION BY ParcelID,
+		     PropertyAddress,
+		     SalePrice,
+		     SaleDate,
+		     LegalReference
+		     ORDER BY UniqueID
+				 ) rn
+FROM PortfolioProject.dbo.NashvilleHousing
+)
+
+DELETE
+FROM RowCte
+WHERE rn > 1
+```
+
+This query will partition our data by the columns ParcelID, PropertyAddress, SalePrice, SaleDate, and LegalReference. Since we are using the ROW_NUMBER function, each row where these values are unique will have a ROW_NUMBER value of 1. If there is more than one row where those values are repeated, the value of that ROW_NUMBER will be more than 1, which means we will have a duplicate row. We can use DELETE to get rid of values where ROW_NUMBER is greater than 1.
+
 
 
