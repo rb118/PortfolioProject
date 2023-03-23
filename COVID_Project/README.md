@@ -374,7 +374,7 @@ Here are the first few rows:
 ### 17. What is the 7 day rolling average of deaths for United States?
 
 ```sql
-SELECT continent, location, date,  population, CAST(new_deaths AS int) AS new_deaths, AVG(CAST(new_deaths AS int)) OVER(partition BY location ORDER BY location, date rows between 6 preceding and current row) AS WeeklyRollingDeathAverage
+SELECT continent, location, date, population, CAST(new_deaths AS int) AS new_deaths, AVG(CAST(new_deaths AS int)) OVER(partition BY location ORDER BY location, date rows between 6 preceding and current row) AS WeeklyRollingDeathAverage
 FROM PortfolioProject..CovidDeaths
 WHERE continent IS NOT NULL AND location = 'United States'
 ORDER BY location, date
@@ -391,7 +391,7 @@ Here are the last few rows:
 ### 18. What is the 7 day rolling average of deaths for every location?
 
 ```sql
-SELECT continent, location, date,  population, CAST(new_deaths AS int) AS new_deaths, AVG(CAST(new_deaths AS int)) OVER(partition BY location ORDER BY location, date rows between 6 preceding and current row) AS WeeklyRollingDeathAverage
+SELECT continent, location, date, population, CAST(new_deaths AS int) AS new_deaths, AVG(CAST(new_deaths AS int)) OVER(partition BY location ORDER BY location, date rows between 6 preceding and current row) AS WeeklyRollingDeathAverage
 FROM PortfolioProject..CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY location, date
