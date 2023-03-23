@@ -10,8 +10,6 @@
 SELECT SaleDateConverted, CONVERT(Date, SaleDate)
 FROM PortfolioProject..NashvilleHousing
 
---UPDATE NashvilleHousing
---SET SaleDate = CONVERT(Date,SaleDate)
 
 ALTER TABLE NashvilleHousing
 Add SaleDateConverted Date;
@@ -28,7 +26,7 @@ SET SaleDateConverted = CONVERT(Date, SaleDate)
 SELECT *
 FROM PortfolioProject..NashvilleHousing
 WHERE PropertyAddress IS NULL
-order by ParcelID
+ORDER BY ParcelID
 
 
 SELECT a.ParcelID, a.PropertyAddress, b.ParcelID, b.PropertyAddress, ISNULL(a.PropertyAddress, b.PropertyAddress)
