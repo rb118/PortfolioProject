@@ -2,6 +2,8 @@
 
 In this project, we have a data set about housing in Nashville. Let's clean it to make it more usable for data analysis.
 
+View the syntax [here](PortfolioProject/Cleaning_Project/NashvilleHousingProject.sql).
+
 ***
 
 First, let's take a look at all of our data.
