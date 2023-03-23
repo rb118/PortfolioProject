@@ -1,8 +1,10 @@
 # 💉 COVID-19 Data Exploration 
 
-Let's explore a global COVID-19 data set.
+Let's explore a global COVID-19 [data set](https://ourworldindata.org/covid-deaths) (the data used for this project goes up to 4/30/21).
 
-View the complete syntax [here](https://github.com/rb118/PortfolioProject/blob/main/COVID_Project/Covid_Portfolio_SQL_Final.sql)
+View the complete syntax [here](https://github.com/rb118/PortfolioProject/blob/main/COVID_Project/Covid_Portfolio_SQL_Final.sql).
+
+View the Tableau visualizations [here](https://public.tableau.com/app/profile/richard.b5125) (there is a dashboard with updated information as of 2023 visualizing global vaccinations).
 
 ***
 
