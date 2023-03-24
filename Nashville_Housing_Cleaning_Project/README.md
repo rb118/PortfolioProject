@@ -149,7 +149,9 @@ SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddres
 
 ![](CleaningPortfolioImages/cleaning_sql_image_7.png)
 
-## 3b. We can do the same thing in a different and simpler way. Let's look at the OwnerAddress column this time. 
+## 3b. Doing the Above in a Simpler Alternative Method 
+
+Let's look at the OwnerAddress column this time. 
 
 ```sql
 SELECT OwnerAddress
