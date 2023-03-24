@@ -81,7 +81,7 @@ In this query, we use a self join. The first join condition is "WHEN a.ParcelID 
 
 The next important part of this query is using the ISNULL function, which returns a specified value if the expression is NULL. For the above query, we are checking if a.PropertyAddress IS NULL. If it is NULL, then we want to return b.PropertyAddress.
 
-This whole query creates a column that we will use to UPDATE the PropertyAddress column.
+This following query creates a column that we will use to UPDATE the PropertyAddress column.
 
 ```sql
 UPDATE a
