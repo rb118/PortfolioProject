@@ -48,7 +48,7 @@ SET SaleDateConverted = CONVERT(Date, SaleDate)
 
 ## 2. Populate Property Address Data
 
-There are null values in the PropertyAddress column. Since this column is referring to the address of property, we can be almost certain that the values will not change. So, let's find out a way to fill these null values.
+There are null values in the PropertyAddress column. Since this column is referring to the address of property, we can be almost certain that the values will not change. So, let's find a way to fill these null values.
 
 If we run the following query (where we order by ParcelID), we notice that there are multiple records where ParcelID and PropertyAddress is the same.
 
