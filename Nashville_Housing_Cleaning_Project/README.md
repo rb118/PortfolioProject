@@ -242,6 +242,8 @@ FROM PortfolioProject.dbo.NashvilleHousing
 
 Note in the second column that "N" has become "No."
 
+We used a CASE statement to say "when the value in SoldAsVacant is "Y", give us "Yes," and when the value is "N," give us "No."
+
 Now let's update our data.
 
 ```sql
