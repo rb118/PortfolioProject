@@ -264,7 +264,7 @@ If we run the first query we made for this question that counts the distinct val
 
 ## 5. Remove Duplicates
 
-To remove duplicates for this data set, we can use PARTITION BY and select some columns that, when combined in a partition, will be more or less a distinct value. 
+To remove duplicates for this data set, we can use PARTITION BY and select some columns that, when combined in a partition, will more or less represent a distinct value. 
 
 ```sql
 with RowCTE AS(
