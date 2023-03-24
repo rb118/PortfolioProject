@@ -214,7 +214,7 @@ Now, if we look at all our data for the NashvilleHousing table, we will have thr
 
 ***
 
-## 4. Change "Y" and "N" to "Yes" and "No" in "Sold as Vacant" Column
+## 4. Change "Y" and "N" to "Yes" and "No" in "SoldAsVacant" Column
 
 In our SoldAsVacant column, we have four different results: "Y", "N", "Yes", or "No". Let's change this column so that "Y" becomes "Yes" and "N" becomes "No."
 
