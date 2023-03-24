@@ -214,7 +214,7 @@ Now, if we look at all our data for the NashvilleHousing table, we will have thr
 
 ***
 
-## 4. Change "Y" and "N" to "Yes" and "No" in "Sold as Vacant" column
+## 4. Change "Y" and "N" to "Yes" and "No" in "Sold as Vacant" Column
 
 In our SoldAsVacant column, we have four different results: "Y", "N", "Yes", or "No". Let's change this column so that "Y" becomes "Yes" and "N" becomes "No."
 
@@ -262,7 +262,7 @@ If we run the first query we made for this question that counts the distinct val
 
 ***
 
-## 5. Remove duplicates
+## 5. Remove Duplicates
 
 To remove duplicates for this data set, we can use PARTITION BY and select some columns that, when combined in a partition, will be more or less a distinct value. 
 
@@ -289,7 +289,7 @@ This query will partition our data by the columns ParcelID, PropertyAddress, Sal
 
 ***
 
-## 6. Delete unused columns
+## 6. Delete Unused Columns
 
 ```sql
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
