@@ -60,7 +60,7 @@ ORDER BY ParcelID
 
 ![](CleaningPortfolioImages/cleaning_sql_image_3.png)
 
-So, we can say if the first ParcelID highlighted has a PropertyAddress, and the second ParcelID does not have an PropertyAddress, let's populate it with the first address that's already populated since we know they are going to be the same.
+So, we can say if the first ParcelID highlighted has a PropertyAddress, and the second ParcelID does not have a PropertyAddress, let's populate it with the first address that's already populated since we know they are going to be the same.
 
 We can do this by using a self join.
 
