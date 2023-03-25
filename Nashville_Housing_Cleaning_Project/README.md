@@ -81,7 +81,7 @@ In this query, we use a self join. The first join condition is "WHEN a.ParcelID 
 
 The next important part of this query is using the ISNULL function, which returns a specified value if the expression is NULL. For the above query, we are checking if a.PropertyAddress IS NULL. If it is NULL, then we want to return b.PropertyAddress.
 
-This following query creates a column that we will use to UPDATE the PropertyAddress column.
+This following code creates a column that we will use to UPDATE the PropertyAddress column.
 
 ```sql
 UPDATE a
@@ -285,7 +285,7 @@ FROM RowCte
 WHERE rn > 1
 ```
 
-This query will partition our data by the columns ParcelID, PropertyAddress, SalePrice, SaleDate, and LegalReference. Since we are using the ROW_NUMBER function, each row where these combined values are unique will have a ROW_NUMBER value of 1. If there is more than one row where those values are repeated, the value of that ROW_NUMBER will be more than 1, which means we will have a duplicate row. We can use DELETE to get rid of values where ROW_NUMBER is greater than 1.
+This code will partition our data by the columns ParcelID, PropertyAddress, SalePrice, SaleDate, and LegalReference. Since we are using the ROW_NUMBER function, each row where these combined values are unique will have a ROW_NUMBER value of 1. If there is more than one row where those values are repeated, the value of that ROW_NUMBER will be more than 1, which means we will have a duplicate row. We can use DELETE to get rid of values where ROW_NUMBER is greater than 1.
 
 ***
 
@@ -296,7 +296,7 @@ ALTER TABLE PortfolioProject.dbo.NashvilleHousing
 DROP COLUMN OwnerAddress, PropertyAddress, SaleDate
 ```
 
-This query gets rid of columns that we no longer need since we have updated columns for each.
+This code gets rid of columns that we no longer need since we have updated columns for each.
 
 ***
 
