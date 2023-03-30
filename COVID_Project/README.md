@@ -237,7 +237,7 @@ FROM PortfolioProject..CovidDeaths AS dea
 JOIN PortfolioProject..CovidVaccinations AS vac
 	ON dea.location = vac.location
 	AND dea.date = vac.date
-where dea.continent IS NOT NULL
+WHERE dea.continent IS NOT NULL
 
 SELECT *
 FROM PercentPopulationVaccinated
