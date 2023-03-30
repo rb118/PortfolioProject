@@ -69,6 +69,7 @@ FROM PortfolioProject..CovidDeaths
 WHERE continent IS NOT NULL 
 GROUP BY location
 )
+
 SELECT location, TotalDeathCount
 FROM cte
 WHERE TotalDeathCount >= 50000
